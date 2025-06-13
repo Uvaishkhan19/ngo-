@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | Sakhi Vatsalya</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 10px;
+      width: 250px;
+      text-align: center;
+    }
+
+    select {
+      margin: 10px 0;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Our Products</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about us.html">About Us</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="address.html">Address</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section class="product-grid">
+
+    <div class="product-card">
+      <h3>Menstrual Cup (100% Organic )</h3>
+      <p>₹350</p>
+      <p>Reusable menstrual cup made of medical-grade silicone.</p>
+      <label>Quantity:
+        <select id="qty-menstrual">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('Menstrual Cup', 350, document.getElementById('qty-menstrual').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>2-Panty Smart (100% Organic)</h3>
+      <p>₹50</p>
+      <p>Specially designed to feel like regular underwear.</p>
+      <label>Quantity:
+        <select id="qty-panty">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('2-Panty Smart', 50, document.getElementById('qty-panty').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>Inccenation (100% Organic)</h3>
+      <p>₹5000</p>
+      <p>Eco-friendly sanitary pad incineration unit.</p>
+      <label>Quantity:
+        <select id="qty-incineration">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+
+        </select>
+      </label><br>
+      <button onclick="addToCart('Inccenation', 5000, document.getElementById('qty-incineration').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>Adult Diaper (Pack of 3) (100% Organic)</h3>
+      <p>₹100</p>
+      <p>Designed for comfort and protection during incontinence.</p>
+      <label>Quantity:
+        <select id="qty-diaper">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('Adult Diaper (Pack of 3)', 100, document.getElementById('qty-diaper').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>Panty Smart Suraksha (100% Organic)</h3>
+      <p>₹100</p>
+      <p>Overnight underwear with extra protection.</p>
+      <label>Quantity:
+        <select id="qty-suraksha">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('Panty Smart Suraksha', 100, document.getElementById('qty-suraksha').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>Sakhi Premier XL 280mm (100% Organic)</h3>
+      <p>₹50</p>
+      <p>Biodegradable pad for heavy flow days.</p>
+      <label>Quantity:
+        <select id="qty-premier">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('Sakhi Premier XL', 50, document.getElementById('qty-premier').value)">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <h3>Sanitary Pad Regular Size 240mm (100% Organic)</h3>
+      <p>₹50</p>
+      <p>Rash-free, chemical-free pad for regular days.</p>
+      <label>Quantity:
+        <select id="qty-regularpad">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+
+        </select>
+      </label><br>
+      <button onclick="addToCart('Sanitary Pad Regular Size', 50, document.getElementById('qty-regularpad').value)">Add to Cart</button>
+    </div> 
+
+    <div class="product-card">
+      <h3>Sakhi Premier XXL 330mm (100% Organic)</h3>
+      <p>₹50</p>
+      <p>Biodegradable pad for heavy flow days.</p>
+      <label>Quantity:
+        <select id="qty-premier">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
+      </label><br>
+      <button onclick="addToCart('Sakhi Premier XXL', 50, document.getElementById('qty-premier').value)">Add to Cart</button>
+    </div>
+
+
+  </section>
+
+  <script>
+    function addToCart(productName, price, quantity) {
+      quantity = parseInt(quantity);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      for (let i = 0; i < quantity; i++) {
+        cart.push({ name: productName, price: price });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(quantity + ' x ' + productName + ' added to cart!');
+    }
+  </script>
+
+  <footer>
+    <p>© 2025 Sakhi Vatsalya. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

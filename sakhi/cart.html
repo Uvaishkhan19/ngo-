@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart | Sakhi Vatsalya</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- EmailJS & SweetAlert -->
+   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 10px;
+      width: 250px;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .product-card button {
+      margin-top: 10px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #checkout-form {
+      display: none;
+      margin: 20px auto;
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    #checkout-form input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #checkout-form button {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about us.html">About Us</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="address.html">Address</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>Items in Your Cart</h2>
+    <div id="cart-items" class="product-grid"></div>
+    <h3 id="total-price">Total: ₹0</h3>
+    <button onclick="showCheckoutForm()">Checkout</button>
+  </section>
+
+  <!-- Checkout Form -->
+  <form id="checkout-form">
+    <h3>Shipping Details</h3>
+    <input type="text" id="user-name" placeholder="Full Name" required>
+    <input type="email" id="user-email" placeholder="Email" required>
+    <textarea id="user-address" placeholder="Full Address" rows="4" required></textarea>
+    <button type="submit">Confirm & Send Order</button>
+  </form>
+
+  <footer>
+    <p>© 2025 Sakhi Vatsalya. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    window.onload = function () {
+      emailjs.init("Iw626a03bZJ3B3UHq");
+
+      function loadCart() {
+        const cartItemsDiv = document.getElementById('cart-items');
+        cartItemsDiv.innerHTML = '';
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += item.price;
+          const productCard = document.createElement('div');
+          productCard.className = 'product-card';
+          productCard.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>₹${item.price}</p>
+            <button onclick="removeFromCart(${index})">Remove</button>
+          `;
+          cartItemsDiv.appendChild(productCard);
+        });
+
+        document.getElementById('total-price').textContent = 'Total: ₹' + total;
+      }
+
+      function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+      }
+
+      window.removeFromCart = removeFromCart;
+
+      function showCheckoutForm() {
+        if ((JSON.parse(localStorage.getItem('cart')) || []).length === 0) {
+          Swal.fire('Cart Empty', 'Your cart is empty.', 'warning');
+          return;
+        }
+        document.getElementById("checkout-form").style.display = "block";
+      }
+
+      window.showCheckoutForm = showCheckoutForm;
+
+      document.getElementById("checkout-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("user-name").value;
+        const email = document.getElementById("user-email").value;
+        const address = document.getElementById("user-address").value;
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        let orderDetails = "";
+        cart.forEach(item => {
+          orderDetails += `${item.name} - ₹${item.price}\n`;
+        });
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        const templateParams = {
+          user_name: name,
+          user_email: email,
+          user_address: address,
+          order_summary: orderDetails,
+          total_amount: total,
+          reply_to: email // Send copy to customer
+        };
+
+        emailjs.send('Gmail_Service', 'template_rfq4ty3', templateParams)
+          .then(function (response) {
+            Swal.fire({
+              title: 'Order Placed!',
+              text: 'A confirmation has been sent to your email.',
+              icon: 'success',
+              confirmButtonText: 'Okay'
+            }).then(() => {
+              localStorage.removeItem('cart');
+              window.location.reload();
+            });
+          }, function (error) {
+            Swal.fire({
+              title: 'Oops!',
+              text: 'Failed to send order. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'Retry'
+            });
+            console.error("EmailJS Error:", error);
+          });
+      });
+
+      loadCart();
+    };
+  </script>
+</body>
+</html>
